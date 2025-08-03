@@ -1,0 +1,193 @@
+applications:
+- callgraph:
+    composepost:
+    - poststorage
+    - usertimeline
+    - hometimeline
+    hometimeline: []
+    nginx:
+    - composepost
+    poststorage: []
+    usertimeline: []
+  entrypoint: nginx
+  interface: compose
+- callgraph:
+    hometimeline:
+    - poststorage
+    - socialgraph
+    nginx:
+    - hometimeline
+    poststorage: []
+    socialgraph: []
+  entrypoint: nginx
+  interface: home-timeline
+- callgraph:
+    nginx:
+    - usertimeline
+    poststorage: []
+    usertimeline:
+    - poststorage
+  entrypoint: nginx
+  interface: user-timeline
+nodes:
+- URL: Client:50051
+  downstream: []
+  id: 6
+  name: Client
+  nodeAffinity: []
+  server:
+  - name: COMPUTATION_DISTRIBUTION
+    value: constant
+  - name: PROCESS_TIME
+    value: 10ms
+  - name: APP_PORT
+    value: '50051'
+  - name: LOG_LEVEL
+    value: Info
+  - name: GREETING
+    value: Hi Malaka!
+  - name: SUBCALL
+    value: parallel
+  - name: PROFILING
+    value: 'false'
+- URL: composepost:50051
+  downstream:
+  - poststorage
+  - usertimeline
+  - hometimeline
+  id: 0
+  name: composepost
+  nodeAffinity:
+  - node-2
+  replicas: 1
+  server:
+  - name: COMPUTATION_DISTRIBUTION
+    value: constant
+  - name: PROCESS_TIME
+    value: 10ms
+  - name: APP_PORT
+    value: '50051'
+  - name: LOG_LEVEL
+    value: Info
+  - name: GREETING
+    value: Hi Malaka!
+  - name: SUBCALL
+    value: parallel
+  - name: PROFILING
+    value: 'false'
+- URL: hometimeline:50051
+  downstream:
+  - poststorage
+  - socialgraph
+  id: 1
+  name: hometimeline
+  nodeAffinity:
+  - node-3
+  replicas: 1
+  server:
+  - name: COMPUTATION_DISTRIBUTION
+    value: constant
+  - name: PROCESS_TIME
+    value: 10ms
+  - name: APP_PORT
+    value: '50051'
+  - name: LOG_LEVEL
+    value: Info
+  - name: GREETING
+    value: Hi Malaka!
+  - name: SUBCALL
+    value: parallel
+  - name: PROFILING
+    value: 'false'
+- URL: nginx:50051
+  downstream:
+  - composepost
+  - hometimeline
+  - usertimeline
+  id: 5
+  name: nginx
+  nodeAffinity:
+  - node-1
+  replicas: 1
+  server:
+  - name: COMPUTATION_DISTRIBUTION
+    value: constant
+  - name: PROCESS_TIME
+    value: 10ms
+  - name: APP_PORT
+    value: '50051'
+  - name: LOG_LEVEL
+    value: Info
+  - name: GREETING
+    value: Hi Malaka!
+  - name: SUBCALL
+    value: parallel
+  - name: PROFILING
+    value: 'false'
+- URL: poststorage:50051
+  downstream: []
+  id: 4
+  name: poststorage
+  nodeAffinity:
+  - node-5
+  replicas: 1
+  server:
+  - name: COMPUTATION_DISTRIBUTION
+    value: constant
+  - name: PROCESS_TIME
+    value: 10ms
+  - name: APP_PORT
+    value: '50051'
+  - name: LOG_LEVEL
+    value: Info
+  - name: GREETING
+    value: Hi Malaka!
+  - name: SUBCALL
+    value: parallel
+  - name: PROFILING
+    value: 'false'
+- URL: socialgraph:50051
+  downstream: []
+  id: 3
+  name: socialgraph
+  nodeAffinity:
+  - node-6
+  replicas: 1
+  server:
+  - name: COMPUTATION_DISTRIBUTION
+    value: constant
+  - name: PROCESS_TIME
+    value: 10ms
+  - name: APP_PORT
+    value: '50051'
+  - name: LOG_LEVEL
+    value: Info
+  - name: GREETING
+    value: Hi Malaka!
+  - name: SUBCALL
+    value: parallel
+  - name: PROFILING
+    value: 'false'
+- URL: usertimeline:50051
+  downstream:
+  - poststorage
+  id: 2
+  name: usertimeline
+  nodeAffinity:
+  - node-4
+  replicas: 1
+  server:
+  - name: COMPUTATION_DISTRIBUTION
+    value: constant
+  - name: PROCESS_TIME
+    value: 10ms
+  - name: APP_PORT
+    value: '50051'
+  - name: LOG_LEVEL
+    value: Info
+  - name: GREETING
+    value: Hi Malaka!
+  - name: SUBCALL
+    value: parallel
+  - name: PROFILING
+    value: 'false'

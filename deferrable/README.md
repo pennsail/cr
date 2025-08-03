@@ -57,7 +57,7 @@ Putting these together, each sample gives us an 4-dimensional feature vector. We
 ### 3. Fitting a Sparse Linear Model (Lasso)
 
 1. **Data Splitting & Standardization**
-   We collect all samples (for a given policy) into a large $N×7$ feature matrix $X$ and a length-$N$ target vector $y=\{\Delta waiting\}$. We then standardize each column of $X$ to zero mean and unit variance.
+   We collect all samples (for a given policy) into a large $N×4$ feature matrix $X$ and a length-$N$ target vector $y=\{\Delta waiting\}$. We then standardize each column of $X$ to zero mean and unit variance.
 
 2. **10-Fold Cross-Validated Lasso**
    We use scikit-learn’s `LassoCV` with 10 folds and `positive=True` (non‐negative coefficients). This means:
