@@ -15,9 +15,6 @@ Host github.com
     Port 443
 EOF'
 
-# Step 4: Clone repository
-# ssh -p 22 -i "${private_key}" "${node_username}@${node_address}" 'cd ~ && git clone https://github.com/USER/protobuf.git && cd protobuf'
-
 # run setup-cloudlab.sh to setup the hotel app
 bash ./setup-cloudlab.sh
 
